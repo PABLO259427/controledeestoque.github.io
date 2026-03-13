@@ -1576,17 +1576,15 @@
                 user: 'Usuário Atual'
             };
             
+            // Alerta imediato
+            showNotification('✅ Entrada registrada com sucesso!', 'success');
+            
             data.movements.push(movement);
             saveData();
             updateAllViews();
             this.reset();
             clearPepSearch('entryPepReturn');
             clearMaterialSearch('entryMaterial');
-            
-            // Forçar exibição do alerta
-            setTimeout(() => {
-                showNotification('✅ Entrada registrada com sucesso!', 'success');
-            }, 100);
         });
 
         // ============================================================
@@ -1632,17 +1630,15 @@
                 user: 'Usuário Atual'
             };
             
+            // Alerta imediato
+            showNotification('✅ Saída registrada com sucesso!', 'success');
+            
             data.movements.push(movement);
             saveData();
             updateAllViews();
             this.reset();
             clearPepSearch('exitPep');
             clearMaterialSearch('exitMaterial');
-            
-            // Forçar exibição do alerta
-            setTimeout(() => {
-                showNotification('✅ Saída registrada com sucesso!', 'success');
-            }, 100);
         });
 
         // ============================================================
@@ -1689,16 +1685,14 @@
                 user: 'Usuário Atual'
             };
             
+            // Alerta imediato
+            showNotification('✅ Devolução registrada com sucesso!', 'success');
+            
             data.movements.push(movement);
             saveData();
             updateAllViews();
             this.reset();
             clearReturnPep();
-            
-            // Forçar exibição do alerta
-            setTimeout(() => {
-                showNotification('✅ Devolução registrada com sucesso!', 'success');
-            }, 100);
         });
 
         // ============================================================
@@ -2132,59 +2126,44 @@
          * com ícone, título, mensagem e barra de progresso animada.
          */
         function showNotification(message, type) {
+            console.log('Notificação disparada:', message, type);
             type = type || 'success';
-
             const container = document.getElementById('toast-container');
-            if (!container) return;
+            if (!container) {
+                alert(message); // Fallback se o container sumir
+                return;
+            }
 
-            // Configurações por tipo
             const config = {
-                success: {
-                    icon: 'fa-circle-check',
-                    title: '✅ Operação realizada com sucesso!',
-                    cls: 'toast-success'
-                },
-                error: {
-                    icon: 'fa-circle-xmark',
-                    title: '❌ Atenção — Erro detectado',
-                    cls: 'toast-error'
-                },
-                warning: {
-                    icon: 'fa-triangle-exclamation',
-                    title: '⚠️ Aviso importante',
-                    cls: 'toast-warning'
-                }
+                success: { icon: 'fa-circle-check', title: '✅ SUCESSO!', cls: 'toast-success' },
+                error: { icon: 'fa-circle-xmark', title: '❌ ERRO!', cls: 'toast-error' },
+                warning: { icon: 'fa-triangle-exclamation', title: '⚠️ AVISO!', cls: 'toast-warning' }
             };
 
             const c = config[type] || config.success;
             const id = 'toast-' + Date.now();
-
             const toast = document.createElement('div');
             toast.id = id;
             toast.className = 'toast ' + c.cls;
-            toast.style.position = 'relative';
+            
+            // Forçar visibilidade imediata
+            toast.style.opacity = '1';
+            toast.style.transform = 'scale(1)';
 
             toast.innerHTML = `
-                <div class="toast-inner">
-                    <div class="toast-icon-bar">
-                        <i class="fas ${c.icon}"></i>
-                    </div>
+                <div class="toast-inner" style="padding: 20px;">
+                    <div class="toast-icon-bar"><i class="fas ${c.icon} fa-2x"></i></div>
                     <div class="toast-body">
-                        <div class="toast-title">${c.title}</div>
-                        <div class="toast-message">${message}</div>
+                        <div class="toast-title" style="font-size: 1.2rem; font-weight: 800;">${c.title}</div>
+                        <div class="toast-message" style="font-size: 1.1rem;">${message}</div>
                     </div>
                 </div>
-                <div class="toast-progress"></div>
-                <button class="toast-close" onclick="dismissToast('${id}')" title="Fechar">
-                    <i class="fas fa-xmark"></i>
-                </button>
+                <div class="toast-progress" style="animation-duration: 10s;"></div>
+                <button class="toast-close" onclick="dismissToast('${id}')" style="top: 10px; right: 10px;"><i class="fas fa-xmark fa-lg"></i></button>
             `;
 
             container.appendChild(toast);
-
-            // Remove automaticamente após 6 segundos
-            const timer = setTimeout(() => dismissToast(id), 6000);
-            toast._timer = timer;
+            setTimeout(() => dismissToast(id), 10000); // 10 segundos na tela
         }
 
         function dismissToast(id) {
