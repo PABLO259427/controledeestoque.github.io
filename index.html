@@ -1582,7 +1582,11 @@
             this.reset();
             clearPepSearch('entryPepReturn');
             clearMaterialSearch('entryMaterial');
-            showNotification('Entrada registrada com sucesso!', 'success');
+            
+            // Forçar exibição do alerta
+            setTimeout(() => {
+                showNotification('✅ Entrada registrada com sucesso!', 'success');
+            }, 100);
         });
 
         // ============================================================
@@ -1634,7 +1638,11 @@
             this.reset();
             clearPepSearch('exitPep');
             clearMaterialSearch('exitMaterial');
-            showNotification('Saída registrada com sucesso!', 'success');
+            
+            // Forçar exibição do alerta
+            setTimeout(() => {
+                showNotification('✅ Saída registrada com sucesso!', 'success');
+            }, 100);
         });
 
         // ============================================================
@@ -1686,7 +1694,11 @@
             updateAllViews();
             this.reset();
             clearReturnPep();
-            showNotification('Devolução registrada com sucesso!', 'success');
+            
+            // Forçar exibição do alerta
+            setTimeout(() => {
+                showNotification('✅ Devolução registrada com sucesso!', 'success');
+            }, 100);
         });
 
         // ============================================================
