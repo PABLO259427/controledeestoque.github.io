@@ -275,7 +275,7 @@
         .toast-progress {
             height: 4px;
             border-radius: 0 0 14px 14px;
-            animation: toastProgress 3s linear forwards;
+            animation: toastProgress 5.5s linear forwards;
             transform-origin: left;
         }
 
@@ -2159,8 +2159,8 @@
 
             container.appendChild(toast);
 
-            // Remove automaticamente após 3.5 segundos
-            const timer = setTimeout(() => dismissToast(id), 3500);
+            // Remove automaticamente após 6 segundos
+            const timer = setTimeout(() => dismissToast(id), 6000);
             toast._timer = timer;
         }
 
